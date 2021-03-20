@@ -5,9 +5,9 @@ import Person from './Person/Person'
 class App extends Component {
     state = {
         persons: [
-            {name:"John", age: 28},
-            {name:"Doe", age: 21},
-            {name:"Anonymous", age: 23},
+            {id:1, name:"John", age: 28},
+            {id:2, name:"Doe", age: 21},
+            {id:3, name:"Anonymous", age: 23},
         ],
         personNames : [
             "Alice", "Max", "Chandler", "Joey", "Jamie", "Bruce", "Alex", "Mahmut"
@@ -15,13 +15,18 @@ class App extends Component {
         showPersons : false
     }
 
-    switchNameHandler = (event) => {
+    switchNameHandler = (event, id) => {
         let persons = [...this.state.persons];
+        let personIndex = Math.floor(Math.random() * persons.length);
         let randomName =  this.state.personNames[Math.floor(Math.random() * this.state.personNames.length)];
         if (event && event.target)
             randomName = event.target.value;
 
-        persons[Math.floor(Math.random() * persons.length)].name = randomName
+        if (id)
+            personIndex = this.state.persons.findIndex(x => x.id === id)
+
+
+        persons[personIndex].name = randomName
 
         this.setState({
             persons:persons
@@ -41,19 +46,29 @@ class App extends Component {
         })
     }
 
+    deletePersonHandler = (index) => {
+        let persons = [...this.state.persons];
+        persons.splice(index,1)
+        this.setState({
+            persons : persons
+        })
+    }
+
     render() {
         let persons = null;
         if (this.state.showPersons) {
             persons = (
                 <div>
                     {
-                        this.state.persons.map(x =>  {
+                        this.state.persons.map((x, index) =>  {
                             return (
                                 <Person
+                                    key={x.id}
                                     name={x.name}
                                     age={x.age}
-                                    click={this.switchAgeHandler.bind(this, "customParameterIfNeeded")}
-                                    onChangeHandler={this.switchNameHandler}
+                                    click={this.switchAgeHandler}
+                                    onChangeHandler={(event) => this.switchNameHandler(event, x.id)}
+                                    deletePersonHandler={this.deletePersonHandler.bind(this, index)}
                                 />
                             )
                         })
