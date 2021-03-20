@@ -1,14 +1,13 @@
 import React from 'react';
-
+import './Person.css';
 
 const person = (props) => {
     return (
-        <div>
+        <div className={"Person"}>
             <h3 onClick={props.click}>I'm {props.name || "Anonym"} and I am {props.age || "tousands"} years old!</h3>
             <p>{props.children}</p>
             <input type={"text"} onChange={props.onChangeHandler} value={props.name}/>
         </div>
-
     )
 }
 

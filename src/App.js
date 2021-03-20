@@ -11,7 +11,8 @@ class App extends Component {
         ],
         personNames : [
             "Alice", "Max", "Chandler", "Joey", "Jamie", "Bruce", "Alex", "Mahmut"
-        ]
+        ],
+        showPersons : false
     }
 
     switchNameHandler = (event) => {
@@ -34,14 +35,18 @@ class App extends Component {
         })
     }
 
+    togglePersonsHandler = () => {
+        this.setState({
+            showPersons : !this.state.showPersons
+        })
+    }
+
     render() {
-        return (
-            <div className="App">
+        let persons = null;
+
+        if (this.state.showPersons) {
+            persons = (
                 <div>
-                    <h1>Hi, I'm a React App.</h1>
-                    <button onClick={() => this.switchNameHandler("customParameterIfNeeded")}>
-                        Switch Names
-                    </button>
                     <Person
                         name={this.state.persons[0].name}
                         age={this.state.persons[0].age}
@@ -58,8 +63,22 @@ class App extends Component {
                         name={this.state.persons[2].name}
                         age={this.state.persons[2].age}
                     />
+                </div>
+            );
+        }
 
+        return (
+            <div className="App">
 
+                <div>
+                    <h1>Hi, I'm a React App.</h1>
+                    <button onClick={() => this.switchNameHandler("customParameterIfNeeded")}>
+                        Switch Names
+                    </button>
+                    <button onClick={this.togglePersonsHandler}>
+                        Toggle Visibility
+                    </button>
+                    {persons}
                 </div>
             </div>
         );
