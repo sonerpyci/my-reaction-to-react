@@ -14,11 +14,14 @@ class App extends Component {
         ]
     }
 
-    switchNameHandler = () => {
+    switchNameHandler = (event) => {
         let persons = [...this.state.persons];
-        let randomName =  this.state.personNames[Math.floor(Math.random() * this.state.personNames.length)];
-        persons[Math.floor(Math.random() * persons.length)].name = randomName
-
+        if (event && event.target){
+            persons[1].name = event.target.value;
+        } else {
+            let randomName =  this.state.personNames[Math.floor(Math.random() * this.state.personNames.length)];
+            persons[Math.floor(Math.random() * persons.length)].name = randomName
+        }
         this.setState({
             persons:persons
         })
@@ -36,7 +39,9 @@ class App extends Component {
             <div className="App">
                 <div>
                     <h1>Hi, I'm a React App.</h1>
-                    <button onClick={() => this.switchNameHandler("customParameterIfNeeded")}>Switch Names</button> /* A Way of Passing parameter */
+                    <button onClick={() => this.switchNameHandler("customParameterIfNeeded")}>
+                        Switch Names
+                    </button>
                     <Person
                         name={this.state.persons[0].name}
                         age={this.state.persons[0].age}
@@ -45,6 +50,7 @@ class App extends Component {
                         name={this.state.persons[1].name}
                         age={this.state.persons[1].age}
                         click={this.switchAgeHandler.bind(this, "customParameterIfNeeded")} /* A Way of Passing parameter */
+                        onChangeHandler={this.switchNameHandler}
                     >
                         Click {this.state.persons[1].name}'s line and let change age of random person.
                     </Person>
