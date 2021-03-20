@@ -17,12 +17,12 @@ class App extends Component {
 
     switchNameHandler = (event) => {
         let persons = [...this.state.persons];
-        if (event && event.target){
-            persons[1].name = event.target.value;
-        } else {
-            let randomName =  this.state.personNames[Math.floor(Math.random() * this.state.personNames.length)];
-            persons[Math.floor(Math.random() * persons.length)].name = randomName
-        }
+        let randomName =  this.state.personNames[Math.floor(Math.random() * this.state.personNames.length)];
+        if (event && event.target)
+            randomName = event.target.value;
+
+        persons[Math.floor(Math.random() * persons.length)].name = randomName
+
         this.setState({
             persons:persons
         })
@@ -43,26 +43,21 @@ class App extends Component {
 
     render() {
         let persons = null;
-
         if (this.state.showPersons) {
             persons = (
                 <div>
-                    <Person
-                        name={this.state.persons[0].name}
-                        age={this.state.persons[0].age}
-                    />
-                    <Person
-                        name={this.state.persons[1].name}
-                        age={this.state.persons[1].age}
-                        click={this.switchAgeHandler.bind(this, "customParameterIfNeeded")} /* A Way of Passing parameter */
-                        onChangeHandler={this.switchNameHandler}
-                    >
-                        Click {this.state.persons[1].name}'s line and let change age of random person.
-                    </Person>
-                    <Person
-                        name={this.state.persons[2].name}
-                        age={this.state.persons[2].age}
-                    />
+                    {
+                        this.state.persons.map(x =>  {
+                            return (
+                                <Person
+                                    name={x.name}
+                                    age={x.age}
+                                    click={this.switchAgeHandler.bind(this, "customParameterIfNeeded")}
+                                    onChangeHandler={this.switchNameHandler}
+                                />
+                            )
+                        })
+                    }
                 </div>
             );
         }
