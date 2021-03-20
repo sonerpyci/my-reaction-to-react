@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import Person from './Person/Person'
+
 class App extends Component {
     state = {
         persons: [
@@ -22,6 +23,13 @@ class App extends Component {
             persons:persons
         })
     }
+    switchAgeHandler = () => {
+        let persons = [...this.state.persons];
+        persons[Math.floor(Math.random() * persons.length)].age = [Math.floor(Math.random() * 30)]
+        this.setState({
+            persons:persons
+        })
+    }
 
     render() {
         return (
@@ -36,8 +44,9 @@ class App extends Component {
                     <Person
                         name={this.state.persons[1].name}
                         age={this.state.persons[1].age}
+                        click={this.switchAgeHandler}
                     >
-                        I Like Swimming.
+                        Click {this.state.persons[1].name}'s line and let change age of random person.
                     </Person>
                     <Person
                         name={this.state.persons[2].name}
