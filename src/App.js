@@ -36,7 +36,7 @@ class App extends Component {
             <div className="App">
                 <div>
                     <h1>Hi, I'm a React App.</h1>
-                    <button onClick={this.switchNameHandler}>Switch Names</button>
+                    <button onClick={() => this.switchNameHandler("customParameterIfNeeded")}>Switch Names</button> /* A Way of Passing parameter */
                     <Person
                         name={this.state.persons[0].name}
                         age={this.state.persons[0].age}
@@ -44,7 +44,7 @@ class App extends Component {
                     <Person
                         name={this.state.persons[1].name}
                         age={this.state.persons[1].age}
-                        click={this.switchAgeHandler}
+                        click={this.switchAgeHandler.bind(this, "customParameterIfNeeded")} /* A Way of Passing parameter */
                     >
                         Click {this.state.persons[1].name}'s line and let change age of random person.
                     </Person>
